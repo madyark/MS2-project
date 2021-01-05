@@ -88,7 +88,7 @@
     text-align: center; /* ensures that everything will appear in the middle of the page (horizontally) */
 }
 
-#image-one, #image-two {
+#image-left img, #image-right img {
     width: 60%;
     height: 600px; /* ensures that all images stay the same height as they change */
     object-fit: cover; /* ensures that the images preserve their aspect ratio even though they have a set width and height */
@@ -96,7 +96,7 @@
     overflow: hidden; /* ensures that images will not overflow outside of their parent container */
 }
 
-#image-one:hover, #image-two:hover {
+#image-left img:hover, #image-right img:hover {
     cursor: pointer;
 }
 

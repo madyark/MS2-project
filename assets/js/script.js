@@ -1,10 +1,17 @@
-let imgOne = document.getElementById("image-one");
-let imgTwo = document.getElementById("image-two");
+let imgLeft = document.getElementById("image-left");
+let imgRight = document.getElementById("image-right");
 
-imgOne.onclick = function() {
-    imgOne.src = "assets/images/loading.gif"; // This image will appear while the webpage loads an image from the API
+let imgOne = document.querySelector("#image-left img");
+let imgTwo = document.querySelector("#image-right img");
+
+imgOne.onclick = function() { // This image will appear while the webpage loads an image from the API
+    imgLeft.innerHTML = `
+        <img src="assets/images/loading.gif" alt="Loading image">
+        <p>Please wait. Your image is being loaded.</p>`;
 };
 
-imgTwo.onclick = function() {
-    imgTwo.src = "assets/images/loading.gif"; // This image will appear while the webpage loads an image from the API
+imgTwo.onclick = function() { // This image will appear while the webpage loads an image from the API
+    imgRight.innerHTML = `
+        <img src="assets/images/loading.gif" alt="Loading image">
+        <p>Please wait. Your image is being loaded.</p>`;
 };

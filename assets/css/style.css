@@ -25,7 +25,7 @@
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    width: 50%; /* width:50% used to ensure that the anchor link only applies for the texts and the image, but not outside of them */
+    width: 50%; /* width:50% used to ensure that the anchor link only applies for the texts and the image, but not outside of them (the anchor link still may be clickable just outside of the texts) */
     margin-left: auto;
     margin-right: auto;
 }
@@ -50,30 +50,113 @@
 #picture-game h1 {
     color: #000000;
     font-size: 45px;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 3px;
 }
 
 #picture-game h2 {
     color: #E3120B;
     font-size: 30px;
+    font-weight: 600;
 }
 
 #clickable-images {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-around;
+    display: flex; /* display:flex allows the items inside of the container to be vertically aligned */
+    flex-flow: row nowrap; /* nowrap ensures that the items stay in the same line */
+    justify-content: center;
     align-items: center;
     list-style-type: none;
     padding: 0px;
-    margin-top: 32px;
+    width: 90%; /* width:90% added to bring the two flex-items together */
+    margin-top: 62px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#clickable-images span {
+    font-size: 32px;
+    font-weight: 600;
+    color: #000000;
 }
 
 #image-left, #image-right {
-
+    text-align: center; /* ensures that everything will appear in the middle of the page (horizontally) */
 }
 
 #image-left img, #image-right img {
     width: 60%;
-    border: 2px solid #000000;
+    border: 3px solid #000000;
+}
+
+#image-left p, #image-right p {
+    font-size: 24px;
+    font-weight: 600;
+    margin-top: 32px;
+}
+
+#progress-bar-display {
+    width: 35%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 62px;
+}
+
+#progress-bar-display p {
+    font-size: 24px;
+    font-weight: 600;
+    color: #000000;
+    text-align: center;
+    margin-top: 32px;
+}
+
+#progress-bar-remainder {
+    color: #E3120B;
+    font-weight: 800; /* higher font-weight for greater emphasis on the span element */
+    font-size: 25px; /* font-size is slightly greater (than 24px) for greater emphasis on the span element */
+}
+
+.progress-bar-background {
+    width: 80%;
+    height: 40px;
+    border: 3px solid #000000;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.progress-bar-foreground {
+    height: 35px; /* smaller height (than 40px) to ensure that the background-color is displayed within its parent div and does not appear to overflow out of the parent div */
+    width: 12%; /* standard width starts at 0% but will expand by 4% (1 out of 25) everytime the user clicks an image (and it will be capped at 100%) */
+}
+
+.light-gray-background {
+    background-color: #F5F5F5;
+}
+
+.green-background {
+    background-color: #00CC00;
+}
+
+#user-buttons {
+    text-align: center;
+    margin-top: 62px;
+    margin-bottom: 62px;
+}
+
+#finished-button, #restart-button {
+    font-size: 20px;
+    border: 3px solid #000000;
+    color: #000000;
+    padding: 10px 50px;
+    margin-left: 40px; /* create equal horizontal margins for both buttons */
+    margin-right: 40px; /* create equal horizontal margins for both buttons */
+}
+
+#finished-button {
+    background-color: #00BFFF;
+    font-weight: 700; /* slightly higher font-weight than in the restart-button as the background color for the finished-button is darker */
+}
+
+#restart-button {
+    background-color: #FFD700;
+    font-weight: 600;
 }

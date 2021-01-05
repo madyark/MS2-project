@@ -72,7 +72,7 @@
     align-items: center; /* items will appear vertically center */
     list-style-type: none;
     padding: 0px;
-    width: 90%; /* width:90% added to bring the two flex-items together */
+    width: 100%; /* width:90% added to bring the two flex-items together */
     margin-top: 62px;
     margin-left: auto;
     margin-right: auto;
@@ -86,11 +86,13 @@
 
 #image-left, #image-right {
     text-align: center; /* ensures that everything will appear in the middle of the page (horizontally) */
+    margin-left: 150px;
+    margin-right: 150px;
 }
 
 #image-left img, #image-right img {
-    width: 60%;
-    height: 600px; /* ensures that all images stay the same height as they change */
+    width: 636px; /* ensures that all images stay the same width as they change */
+    height: 393px; /* ensures that all images stay the same height as they change */
     object-fit: cover; /* ensures that the images preserve their aspect ratio even though they have a set width and height */
     border: 3px solid #000000;
     overflow: hidden; /* ensures that images will not overflow outside of their parent container */

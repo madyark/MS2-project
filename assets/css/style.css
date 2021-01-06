@@ -1,4 +1,4 @@
-/* All pages */
+/* All sections */
 
 * {
     font-family: 'Lato', sans-serif;
@@ -91,8 +91,8 @@
 }
 
 #image-left img, #image-right img {
-    width: 636px; /* ensures that all images stay the same width as they change */
-    height: 393px; /* ensures that all images stay the same height as they change */
+    width: 500px; /* ensures that all images stay the same width as they change */
+    height: 500px; /* ensures that all images stay the same height as they change */
     object-fit: cover; /* ensures that the images preserve their aspect ratio even though they have a set width and height */
     border: 3px solid #000000;
     overflow: hidden; /* ensures that images will not overflow outside of their parent container */
@@ -130,15 +130,14 @@
 }
 
 .progress-bar-background {
-    width: 80%;
-    height: 40px;
     border: 3px solid #000000;
+    width: 80%;
     margin-left: auto;
     margin-right: auto;
 }
 
 .progress-bar-foreground {
-    height: 35px; /* smaller height (than 40px) to ensure that the background-color is displayed within its parent div and does not appear to overflow out of the parent div */
+    height: 35px; 
     width: 12%; /* standard width starts at 0% but will expand by 4% (1 out of 25) everytime the user clicks an image (and it will be capped at 100%) */
 }
 
@@ -173,4 +172,69 @@
 #restart-button {
     background-color: #FFD700;
     font-weight: 600;
+}
+
+/* Specific Meal Search section */
+
+/* Media Queries */
+
+@media only screen and (min-width:993px) and (max-width:1310px) { /* Medium devices (Large tablets and small laptops) */
+    #page-header {
+        height: 90px;
+    }
+    #page-header h1 {
+        font-size: 45px;
+        padding-top: 20px;
+    }
+    #page-header img {
+        height: 45px;
+    }
+    #picture-game {
+        margin-top: 45px;
+    }
+    #picture-game h1, #picture-game h2 {
+        margin-bottom: 20px;
+    }
+    #picture-game h1 {
+        font-size: 30px;
+    }
+    #picture-game h2 {
+        font-size: 24px;
+    }
+    #clickable-images {
+        margin-top: 45px;
+    }
+    #clickable-images span {
+        font-size: 26px;
+    }
+    #image-left, #image-right {
+        margin-left: 100px;
+        margin-right: 100px;
+    }
+    #image-left img, #image-right img {
+        height: 350px;
+        width: 350px;
+    }
+    #image-left p, #image-right p {
+        margin-top: 26px;
+        font-size: 20px;
+    }
+    #progress-bar-display {
+        margin-top: 45px;
+        width: 45%; /* greater width to allow for a wider progress bar */
+    }
+    #progress-bar-display p {
+        font-size: 20px;
+        margin-top: 26px;
+    }
+    #progress-bar-remainder {
+        font-size: 22px;
+    }
+    #user-buttons {
+        margin-top: 45px;
+        margin-bottom: 45px;
+    }
+    #finished-button, #restart-button {
+        font-size: 18px;
+    }
 }

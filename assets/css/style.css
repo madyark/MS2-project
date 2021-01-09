@@ -63,6 +63,7 @@
     color: #E3120B;
     font-size: 30px;
     font-weight: 600;
+    margin-top: 32px;
 }
 
 #food-type-choices {
@@ -71,28 +72,59 @@
     justify-content: center;
     align-items: center; /* items will appear vertically center */
     list-style-type: none;
-    width: 100%;
+    width: 50%;
     padding: 0px; /* to remove the default padding of a <ul> element */
     margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .food-type-items {
     width: 50%;
     text-align: center;
-    font-size: 30px;
+    font-size: 24px;
     font-weight: 600;
     margin-top: 30px;
 }
 
+.food-type-items span { /* ensures that the icon and the text inside of the span are vertically aligned */
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+}
+
+.food-type-items span:hover {
+    cursor: pointer;
+    color: #E3120B;
+}
+
+.food-type-items span i {
+    margin-left: 10px;
+    font-weight: 700; /* slightly greater font-weight than in the span text to make sure that the icon is visible and emphasized */
+}
+
+.user-buttons {
+    text-align: center;
+    margin-top: 62px;
+    margin-bottom: 62px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #refresh-button {
-    background-color: #80ff00;
+    background-color: #00CC00;
     font-weight: 700;
     font-size: 20px;
     border: 3px solid #000000;
     color: #000000;
     padding: 10px 50px;
-    margin-left: auto; /* create equal horizontal margins for both buttons */
-    margin-right: auto; /* create equal horizontal margins for both buttons */
+    margin-left: auto;
+    margin-right: auto;
+    letter-spacing: 1px;
+}
+
+#refresh-button:hover {
+    background-color: #0AC20A;
 }
 
 #clickable-images {
@@ -179,13 +211,7 @@
     background-color: #00CC00;
 }
 
-#user-buttons {
-    text-align: center;
-    margin-top: 62px;
-    margin-bottom: 62px;
-}
-
-#finished-button, #restart-button {
+#finished-button, #restart-button, #back-button {
     font-size: 20px;
     border: 3px solid #000000;
     color: #000000;
@@ -199,9 +225,26 @@
     font-weight: 700; /* slightly higher font-weight than in the restart-button as the background color for the finished-button is darker */
 }
 
+#finished-button:hover {
+    background-color: #0DB9F2;
+}
+
 #restart-button {
     background-color: #FFD700;
     font-weight: 600;
+}
+
+#restart-button:hover {
+    background-color: #F2D00D;
+}
+
+#back-button {
+    background-color: #DF80FF;
+    font-weight: 700;
+}
+
+#back-button:hover {
+    background-color: #D98CF2;
 }
 
 /* Specific Meal Search section */
@@ -264,7 +307,7 @@
         margin-top: 45px;
         margin-bottom: 45px;
     }
-    #finished-button, #restart-button {
+    #finished-button, #restart-button, #back-button {
         font-size: 18px;
     }
 }

@@ -1,5 +1,9 @@
 // Picture Game section
 
+/*window.onload = function() {
+};*/
+
+
 let imgLeft = document.getElementById("image-left");
 let imgRight = document.getElementById("image-right");
 
@@ -20,13 +24,4 @@ imgTwo.onclick = function() { // This image will appear while the webpage loads 
         <p>Please wait. Your image is being loaded.</p>`;
 };
 
-let randomID = Math.floor(Math.random() * 1000000) + 100000; // Creates a random number between 100 000 and 999 999 to match a random food meal ID given in the API
-let secondRandomID = Math.floor(Math.random() * 1000000) + 100000; // Creates another random number between 100 000 and 999 999
-
-while (randomID === secondRandomID) { // If the secondRandomID variable is equal to the randomID, then another random number will be selected
-    secondRandomID = Math.floor(Math.random() * 1000000) + 100000;
-};
-
-randomID = 424571; // testing
-secondRandomID = 419357; // testing
-
+console.log("hello hello gello")

@@ -65,6 +65,8 @@
     font-weight: 600;
 }
 
+
+
 #clickable-images {
     display: flex; /* display:flex allows the items inside of the container to be vertically aligned */
     flex-flow: row nowrap; /* nowrap ensures that the items stay in the same line */

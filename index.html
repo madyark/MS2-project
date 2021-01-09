@@ -32,6 +32,30 @@
         <!-- The section of the page where the user gets to click on an image to showcase their preference and find various meals -->
         <section id="picture-game">
             <h1>What Am I Hungry For?</h1>
+            <h2>Choose one of the following</h2>
+
+            <ul id="food-type-choices">
+                <li class="food-type-items">
+                    Item One
+                </li>
+                <li class="food-type-items">
+                    Item Two
+                </li>
+                <li class="food-type-items">
+                    Item Three
+                </li>
+                <li class="food-type-items">
+                    Item Four
+                </li>
+                <li class="food-type-items">
+                    Item Five
+                </li>
+                <li class="food-type-items">
+                    Item Six
+                </li>
+            </ul>
+
+            <!-- to be removed and inserted as JavaScript -->
             <h2>Click on one of the images below</h2>
 
             <ul id="clickable-images">
@@ -72,5 +96,26 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <!-- JS scripts -->
     <script src="assets/js/script.js" type="text/javascript"></script>
+
+    <script>
+        let foodTypeItems = document.getElementsByClassName("food-type-items");
+
+        let foodTypeItemsLength = foodTypeItems.length;
+
+        let newFoodTypeItems = [];
+
+        for (let i = 0; i < foodTypeItemsLength; i++) {
+            let mealTypes = ["Burger", "Pizza", "Cake", "Chicken", "Steak", "Kebab", "Sushi", "Burrito", "Sea Food", "Salad", "Sandwich", "Tacos", "Pasta", "Ice Cream", "French Fries", "Pancakes", "Eggs", "Soup",];
+
+            let specificMealType = mealTypes[Math.floor(Math.random() * mealTypes.length)]; // Chooses a random index number between 0 and 17 (length of the mealTypes array minus one) and assigns a random element to the variable
+                // Solution found on a StackOverflow post (https://stackoverflow.com/questions/4550505/getting-a-random-value-from-a-javascript-array)
+
+            mealTypes.splice(mealTypes.indexOf(specificMealType), 1); // Removes the selected meal item from the mealTypes array to avoid dupllication of mealTypes elements
+
+            newFoodTypeItems.push(specificMealType);
+
+            foodTypeItems[i].innerHTML = newFoodTypeItems[i]; // Each element in the newFoodTypeItems array is added onto the DOM in appropriate order
+        };
+    </script>
 </body>
 </html>

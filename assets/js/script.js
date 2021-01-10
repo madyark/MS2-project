@@ -100,6 +100,13 @@ function loadFoodItems() { // Loads the initial items in a random order
                 <span class="${newFoodTypeItems[i]}" onclick="foodItemSelection(this.className)">${newFoodTypeItems[i]}<i class="fa fa-angle-right"></i></span>`; 
                 // Each element in the newFoodTypeItems array is added onto the DOM along with its corresponding image
                 // Classes are added so as to push it as a parameter onto the foodItemSelection function. The inspiration for this was found here https://www.codegrepper.com/code-examples/objectivec/javascript+get+value+of+clicked+element
+        
+            $(`img.${newFoodTypeItems[i]}`).hover(function() {
+                $(`span.${newFoodTypeItems[i]}`).css("color", "#E3120B");
+            }, function() {
+                $(`span.${newFoodTypeItems[i]}`).css("color", "#000000");
+            });
+            
             i++;
         };
     };

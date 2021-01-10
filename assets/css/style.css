@@ -88,20 +88,20 @@
 }
 
 .food-type-items img {
-    height: 100px;
-    width: 100px;
-    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+    margin-bottom: 20px;
 }
 
 .food-type-items img:hover {
     cursor: pointer;
-    background-color: #D3D3D3;
 }
 
 .food-type-items span { /* ensures that the icon and the text inside of the span are vertically aligned */
     display: flex;
     align-items: baseline;
     justify-content: center;
+    margin-bottom: 40px;
 }
 
 .food-type-items span:hover {

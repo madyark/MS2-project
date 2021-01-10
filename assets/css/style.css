@@ -4,6 +4,10 @@
     font-family: 'Lato', sans-serif;
 }
 
+.red-hover {
+    color: #E3120B;
+}
+
 #page-header {
     background-color: #0077B6;
     display: block;
@@ -227,6 +231,7 @@
     border: 3px solid #000000;
     color: #000000;
     padding: 10px 50px;
+    width: 200px;
     margin-left: 40px; /* create equal horizontal margins for all buttons to add space */
     margin-right: 40px; 
 }

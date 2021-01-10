@@ -1,6 +1,6 @@
 // Picture Game section
 
-function foodItemSelection(selectedText) { // Loads the API after one of the food items is selected
+function foodItemSelection(selectedText) { // Loads the API after one of the food items is selected with the food item name being transferred as a paramater of the function 
     let changedBody = document.getElementById("changed-body");
 
     // Loading of the new HTML code
@@ -96,18 +96,22 @@ function loadFoodItems() { // Loads the initial items in a random order
             newFoodTypeImages.push(specificMealTypeImage);
             
             foodTypeItems[i].innerHTML = `
-                <img src="assets/images/${newFoodTypeImages[i]}" alt="${newFoodTypeItems[i]} icon" class="${newFoodTypeItems[i]}" onclick="foodItemSelection(this.className)">
-                <span class="${newFoodTypeItems[i]}" onclick="foodItemSelection(this.className)">${newFoodTypeItems[i]}<i class="fa fa-angle-right"></i></span>`; 
+                <img src="assets/images/${newFoodTypeImages[i]}" alt="${newFoodTypeItems[i]} icon" class="${newFoodTypeItems[i]} food-item-image${i}" onclick="foodItemSelection(this.className)">
+                <span class="${newFoodTypeItems[i]} food-item-span${i}" onclick="foodItemSelection(this.className)">${newFoodTypeItems[i]}<i class="fa fa-angle-right"></i></span>`; 
                 // Each element in the newFoodTypeItems array is added onto the DOM along with its corresponding image
                 // Classes are added so as to push it as a parameter onto the foodItemSelection function. The inspiration for this was found here https://www.codegrepper.com/code-examples/objectivec/javascript+get+value+of+clicked+element
-        
-            $(`img.${newFoodTypeItems[i]}`).hover(function() {
-                $(`span.${newFoodTypeItems[i]}`).css("color", "#E3120B");
-            }, function() {
-                $(`span.${newFoodTypeItems[i]}`).css("color", "#000000");
-            });
-            
             i++;
         };
     };
+
+    for (let j = 0; j < foodTypeItemsLength; j++) { // A for loop whose purpose is to change the css of the span elements (using jQuery) whenever the image icons and the span elements are hovered upon
+        $(`.food-item-image${j}`).mouseenter(function() {
+            $(`.food-item-span${j}`).addClass("red-hover");
+        })
+        .mouseleave(function() {
+            $(`.food-item-span${j}`).removeClass("red-hover");
+        });
+    };
 }
+        
+            

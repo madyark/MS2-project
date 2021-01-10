@@ -63,7 +63,7 @@ function foodItemSelection(selectedText) { // Loads the API after one of the foo
 
     xhr.onreadystatechange = function() { // Setting up the XHR state listener
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
+            //console.log(this.responseText);
         }
     };
 };
@@ -74,21 +74,32 @@ function loadFoodItems() { // Loads the initial items in a random order
     let foodTypeItemsLength = foodTypeItems.length;
 
     let newFoodTypeItems = [];
+    let newFoodTypeImages = [];
 
     let i = 0;
 
     while (i < foodTypeItemsLength) { // A while loop that allows us to add elements onto the newFoodTypeItems array and print them into the console as long as a certain condition is being met
         let mealTypes = ["Burger", "Pizza", "Cake", "Chicken", "Steak", "Kebab", "Sushi", "Burrito", "Sea Food", "Salad", "Sandwich", "Tacos", "Pasta", "Ice Cream", "French Fries", "Pancakes", "Eggs", "Soup",];
+        let mealTypesImagesNames = ["hamburger", "pizza", "cake", "chicken-leg", "steak", "kebab", "sushi", "burrito", "shrimp", "salad", "sandwich", "taco", "spaguetti", "ice-cream", "fried-potatoes", "pancake", "fried-egg", "soup",];
+        let mealTypesImagesTypes = [".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png",];
+            // Added names of the images that correspond with each of the meal types and their respective extensions
+            // Objects could have been used instead of arrays, but constructing three arrays was more convenient than making eighteen different objects
 
-        let specificMealType = mealTypes[Math.floor(Math.random() * mealTypes.length)]; // Chooses a random index number between 0 and 17 (length of the mealTypes array minus one) and assigns a random element to the variable
-            // Solution found on a StackOverflow post (https://stackoverflow.com/questions/4550505/getting-a-random-value-from-a-javascript-array)
+        let randomNumber = Math.floor(Math.random() * mealTypes.length); // Chooses a random index number between 0 and 17 (length of the mealTypes array minus one) which will be assigned as an index number for each of the three above arrays
+        let specificMealType = mealTypes[randomNumber];
+        let specificMealTypeImage = mealTypesImagesNames[randomNumber] + mealTypesImagesTypes[randomNumber];
 
         if (newFoodTypeItems.includes(specificMealType)) {
             continue; // If the selected element from the mealTypes array is already in the newFoodTypeItems array, the loop will restart 
         } else {
-            newFoodTypeItems.push(specificMealType);                
-            foodTypeItems[i].innerHTML = `<span id="${newFoodTypeItems[i]}" onclick="foodItemSelection(this.id)">${newFoodTypeItems[i]}<i class="fa fa-angle-right"></i></span>`; // Each element in the newFoodTypeItems array is added onto the DOM
-                // Id is added so as to push it as a parameter onto the foodItemSelection function. The inspiration for this was found here https://www.codegrepper.com/code-examples/objectivec/javascript+get+value+of+clicked+element
+            newFoodTypeItems.push(specificMealType);
+            newFoodTypeImages.push(specificMealTypeImage);
+            
+            foodTypeItems[i].innerHTML = `
+                <img src="assets/images/${newFoodTypeImages[i]}" alt="${newFoodTypeItems[i]} icon" class="${newFoodTypeItems[i]}" onclick="foodItemSelection(this.className)">
+                <span class="${newFoodTypeItems[i]}" onclick="foodItemSelection(this.className)">${newFoodTypeItems[i]}<i class="fa fa-angle-right"></i></span>`; 
+                // Each element in the newFoodTypeItems array is added onto the DOM along with its corresponding image
+                // Classes are added so as to push it as a parameter onto the foodItemSelection function. The inspiration for this was found here https://www.codegrepper.com/code-examples/objectivec/javascript+get+value+of+clicked+element
             i++;
         };
     };

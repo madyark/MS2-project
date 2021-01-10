@@ -63,7 +63,7 @@ function foodItemSelection(selectedText) { // Loads the API after one of the foo
 
     xhr.onreadystatechange = function() { // Setting up the XHR state listener
         if (this.readyState == 4 && this.status == 200) {
-            //console.log(this.responseText);
+            console.log(this.responseText);
         }
     };
 };
@@ -79,13 +79,13 @@ function loadFoodItems() { // Loads the initial items in a random order
     let i = 0;
 
     while (i < foodTypeItemsLength) { // A while loop that allows us to add elements onto the newFoodTypeItems array and print them into the console as long as a certain condition is being met
-        let mealTypes = ["Burger", "Pizza", "Cake", "Chicken", "Steak", "Kebab", "Sushi", "Burrito", "Sea Food", "Salad", "Sandwich", "Tacos", "Pasta", "Ice Cream", "French Fries", "Pancakes", "Eggs", "Soup",];
-        let mealTypesImagesNames = ["hamburger", "pizza", "cake", "chicken-leg", "steak", "kebab", "sushi", "burrito", "shrimp", "salad", "sandwich", "taco", "spaguetti", "ice-cream", "fried-potatoes", "pancake", "fried-egg", "soup",];
-        let mealTypesImagesTypes = [".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png",];
+        let mealTypes = ["Burger", "Pizza", "Cake", "Chicken", "Steak", "Kebab", "Sushi", "Burrito", "Sea Food", "Salad", "Sandwich", "Tacos", "Pasta", "Ice Cream", "French Fries", "Pancakes", "Noodles", "Soup", "Hot Dog", "Donuts", "Fish",];
+        let mealTypesImagesNames = ["hamburger", "pizza", "cake", "chicken-leg", "steak", "kebab", "sushi", "burrito", "shrimp", "salad", "sandwich", "taco", "spaguetti", "ice-cream", "fried-potatoes", "pancake", "noodles", "soup", "hot-dog", "donut", "salmon",];
+        let mealTypesImagesTypes = [".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png",];
             // Added names of the images that correspond with each of the meal types and their respective extensions
             // Objects could have been used instead of arrays, but constructing three arrays was more convenient than making eighteen different objects
 
-        let randomNumber = Math.floor(Math.random() * mealTypes.length); // Chooses a random index number between 0 and 17 (length of the mealTypes array minus one) which will be assigned as an index number for each of the three above arrays
+        let randomNumber = Math.floor(Math.random() * mealTypes.length); // Chooses a random index number between 0 and the length of the mealTypes array minus one which will be assigned as an index number for each of the three above arrays
         let specificMealType = mealTypes[randomNumber];
         let specificMealTypeImage = mealTypesImagesNames[randomNumber] + mealTypesImagesTypes[randomNumber];
 

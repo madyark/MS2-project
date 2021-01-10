@@ -57,7 +57,9 @@ function foodItemSelection(selectedText) { // Loads the API after one of the foo
     const apiKey = "0bd6828e250e4d07b2474b71ff63b815"; // Unique API key assigned by Spoonacular
 
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", `https://api.spoonacular.com/food/menuItems/search?${apiKey}&query=${selectedText}`)
+
+    xhr.open("GET", `https://api.spoonacular.com/food/menuItems/search?apiKey=${apiKey}&query=${selectedText}`);
+    xhr.send();
 
     xhr.onreadystatechange = function() { // Setting up the XHR state listener
         if (this.readyState == 4 && this.status == 200) {
@@ -85,11 +87,8 @@ function loadFoodItems() { // Loads the initial items in a random order
             continue; // If the selected element from the mealTypes array is already in the newFoodTypeItems array, the loop will restart 
         } else {
             newFoodTypeItems.push(specificMealType);                
-            foodTypeItems[i].innerHTML = `<span onclick="foodItemSelection()">${newFoodTypeItems[i]}<i class="fa fa-angle-right"></i></span>`; // Each element in the newFoodTypeItems array is added onto the DOM
-            foodTypeItems[i].addEventListener("click", function() {
-                let selectedFoodTypeItem = foodTypeItems[i];
-                foodItemSelection(selectedFoodTypeItem); // Creating an event listener for each element in the newFoodTypeItems array that will store the selected food type in a variable and pass it on as a paramater to an outside function
-            });
+            foodTypeItems[i].innerHTML = `<span id="${newFoodTypeItems[i]}" onclick="foodItemSelection(this.id)">${newFoodTypeItems[i]}<i class="fa fa-angle-right"></i></span>`; // Each element in the newFoodTypeItems array is added onto the DOM
+                // Id is added so as to push it as a parameter onto the foodItemSelection function. The inspiration for this was found here https://www.codegrepper.com/code-examples/objectivec/javascript+get+value+of+clicked+element
             i++;
         };
     };

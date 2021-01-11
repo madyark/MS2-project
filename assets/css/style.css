@@ -215,7 +215,7 @@
 
 .progress-bar-foreground {
     height: 35px; 
-    width: 12%; /* standard width starts at 0% but will expand by 4% (1 out of 25) everytime the user clicks an image (and it will be capped at 100%) */
+    width: 13.34%; /* standard width starts at 0% but will expand by 6.67% (1 out of 15) everytime the user clicks an image (and it will be capped at 100%) */
 }
 
 .light-gray-background {

@@ -263,6 +263,25 @@
     background-color: #D98CF2;
 }
 
+#amount-of-items-loaded {
+    width: 50%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 128px;
+    margin-bottom: 128px;
+}
+
+#amount-of-items-loaded p {
+    font-weight: 600;
+    font-size: 30px;
+}
+
+#amount-of-items-loaded span {
+    color: #E3120B;
+    font-weight: 800;
+}
+
 /* Specific Meal Search section */
 
 /* Media Queries */

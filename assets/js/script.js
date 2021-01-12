@@ -1,15 +1,12 @@
 // Picture Game section
 
-function setGameData(spoonacularData, numberOfResults) { // Sets the data received from the spoonacular API onto the picture game
+function setGameData(spoonacularData, numberOfResults, numberOfNeededImages, allMenuItems) { // Sets the data received from the spoonacular API onto the picture game (along with the expected number of results generated and number of needed images)
     let data = spoonacularData;
     console.log(data);
-
-    let numberOfMenuItems = data.totalMenuItems; // Assigns the number of menu items loaded from our search query onto a variable
 
     let menuItemIndex = []; // An empty array where the index number of each random meal item selected will be stored 
 
     let selectedNumberOfImages = 0; 
-    let numberOfNeededImages = 15; // Since there are 15 "clicks" needed until the user's selection will be affirmed, we will need 15 different images (and other information on the menu item)
     
     while (selectedNumberOfImages < numberOfNeededImages) {
         let randomMealItemIndex = Math.floor(Math.random() * numberOfResults); // Chooses a random integer from 0 to 99, which will be used as the index number of the various loaded menu items
@@ -25,30 +22,75 @@ function setGameData(spoonacularData, numberOfResults) { // Sets the data receiv
 
     console.log(menuItemIndex);
 
-    let selectedMenuItems = []; // Create an array that will store all of the objects (and the information contained within those objects) of all the selected menu items 
-
-    for (let indexItem = 0; indexItem < menuItemIndex.length; indexItem++) { // 
-        let eachMenuItem = data.menuItems[menuItemIndex[indexItem]];
-        selectedMenuItems.push(eachMenuItem);
-    };
-
-    console.log(selectedMenuItems);
+    let selectedMenuItems = []; // Create an array that will store all of the objects (and the information contained within those objects) of all the selected menu items
+    let menuItemsImagesURLs = []; // An empty array that will store the URLs of all of the selected menus' images
 
     const baseImageUrlPath = "https://images.spoonacular.com/file/wximages/";
 
-    const smallImageSize = "90x90"; // Preset image size set by spoonacular which will be used interchangeably depending on the device screen size (through the manipulation of css media queries)
+    let setImageSize; // Preset image sizes set by spoonacular which will be used interchangeably depending on the device screen size (through the manipulation of css media queries)
+    const smallImageSize = "90x90"; 
     const mediumImageSize = "312x231";
     const largeImageSize = "636x393";
 
-    let setImageSize = largeImageSize;
-    let menuItemId; // to be added later. Unique ID of each menu item set by spoonacular
-    let menuItemImageType; // to be added later. Could be .png, .jpg, etc
+    setImageSize = largeImageSize;
 
-    let completeImageUrl = `${baseImageUrlPath}${menuItemId}-${setImageSize}.${menuItemImageType}`
+    let menuItemId; // Unique ID of each menu item set by spoonacular
+    let menuItemImageType; // Could be .png, .jpg, etc.
+
+    for (let indexItem = 0; indexItem < menuItemIndex.length; indexItem++) { // A for loop that will iterate over the menuItemIndex array and assign each element as an index number of the spoonacular menuItems array 
+        let eachMenuItem = data.menuItems[menuItemIndex[indexItem]];
+        selectedMenuItems.push(eachMenuItem); // Assigning each randomly-selected menu item onto the selectedMenuItems array
+
+        // Assigning all of the IDs and image types of the selected menu items onto their respective variables to create a comple URL path for each of the images
+        menuItemId = eachMenuItem.id;
+        menuItemImageType = eachMenuItem.imageType;
+        let completeImageURL = `${baseImageUrlPath}${menuItemId}-${setImageSize}.${menuItemImageType}`;
+        menuItemsImagesURLs.push(completeImageURL); // Adding each of the URLs onto the menuItemsImagesURLs array 
+    };
+
+    console.log(selectedMenuItems);
+    console.log(menuItemsImagesURLs);
+
+    let leftImage = document.getElementById("image-left");
+    let rightImage = document.getElementById("image-right");
+
+    let firstImage = document.querySelector("#image-left img");
+    let secondImage = document.querySelector("#image-right img");
+
+    let displayedImages = []; // An array that will store the images already displayed
+
+    leftImage.innerHTML = `
+        <img src="${menuItemsImagesURLs[0]}" alt="${selectedMenuItems[0].title}">
+        <p>${selectedMenuItems[0].title} from ${selectedMenuItems[0].restaurantChain}</p>
+    `;
+
+    rightImage.innerHTML = `
+        <img src="${menuItemsImagesURLs[1]}" alt="${selectedMenuItems[1].title}">
+        <p>${selectedMenuItems[1].title} from ${selectedMenuItems[1].restaurantChain}</p>
+    `;
+
+    for (let imageIterator = 0; imageIterator < menuItemsImagesURLs; imageIterator++) {
+        firstImage.onclick = function() {
+            leftImage.innerHTML = `
+                <img src="${menuItemsImagesURLs[imageIterator]}" alt="${selectedMenuItems[imageIterator].title}">
+                <p>${selectedMenuItems[imageIterator].title} from ${selectedMenuItems[imageIterator].restaurantChain}</p>`
+        };
+        secondImage.onclick = function() {
+            rightImage.innerHTML = `
+                <img src="${menuItemsImagesURLs[imageIterator]}" alt="${selectedMenuItems[imageIterator].title}">
+                <p>${selectedMenuItems[imageIterator].title} from ${selectedMenuItems[imageIterator].restaurantChain}</p>`
+        };
+    };
+
+    // Tells the user how many menu items were loaded through their search query
+    amountOfItemsLoaded = document.getElementById("amount-of-items-loaded");
+    amountOfItemsLoaded.innerHTML = `<p>Your search query generated <span>${allMenuItems}</span> different menu items.</p>`;
 }
 
 function foodItemSelection(selectedText) { // Loads the API after one of the food items is selected with the food item name being transferred as a paramater of the function 
     let changedBody = document.getElementById("changed-body");
+    
+    let expectedImages = 15; // Since there are 15 "clicks" needed until the user's selection will be affirmed, we will need 15 different images (and other information on the menu item)
 
     // Loading of the new HTML code
     changedBody.innerHTML = `
@@ -70,13 +112,17 @@ function foodItemSelection(selectedText) { // Loads the API after one of the foo
             <div class="light-gray-background progress-bar-background"> 
                 <div class="green-background progress-bar-foreground"></div> <!-- Every time the user clicks on an image the green background will increment its width by 4% -->
             </div>
-            <p>You have <span id="progress-bar-remainder">15</span> clicks left to go</p> <!-- The span element will decrement every time the user clicks on an image until it hits zero -->
+            <p>You have <span id="progress-bar-remainder">${expectedImages}</span> clicks left to go</p> <!-- The span element will decrement every time the user clicks on an image until it hits zero -->
         </div>
 
         <div class="user-buttons">
             <button id="finished-button">FINISHED</button>
             <button id="restart-button">RESTART</button>
             <button id="back-button">BACK</button>
+        </div>
+
+        <div id="amount-of-items-loaded">
+            <p>Your search query generated <span>0</span> different menu items.</p>
         </div>
     `    
 
@@ -104,16 +150,28 @@ function foodItemSelection(selectedText) { // Loads the API after one of the foo
 
     const apiKey = "0bd6828e250e4d07b2474b71ff63b815"; // Unique API key assigned by Spoonacular
 
-    const expectedResults = 100; // Spoonacular only allows a maximum number of 100 expected results to be loaded from a search query
+    const expectedResults = 100; // Spoonacular only allows a maximum number of 100 results to be loaded from a search query, which unfortunately harms the UX as a larger number would give greater variety of results
 
-    let xhr = new XMLHttpRequest();
+    let initialXHR = new XMLHttpRequest(); // Setting up the initial API request (will be used to load one of the search parameters given by the API, which will then be used to initialize the request with a random number for a different parameter)
 
-    xhr.open("GET", `https://api.spoonacular.com/food/menuItems/search?apiKey=${apiKey}&query=${selectedText}&number=${expectedResults}`);
-    xhr.send();
+    initialXHR.open("GET", `https://api.spoonacular.com/food/menuItems/search?apiKey=${apiKey}&query=${selectedText}&number=${expectedResults}`);
+    initialXHR.send();
 
-    xhr.onreadystatechange = function() { // Setting up the XHR state listener
+    initialXHR.onreadystatechange = function() { // Setting up the XHR state listener
         if (this.readyState == 4 && this.status == 200) {
-            setGameData(JSON.parse(this.responseText), expectedResults); // Calling the function that will set the parsed spoonacular data
+            let numberOfMenuItemsAvailable = JSON.parse(this.responseText).totalMenuItems; // Assigns the number of menu items loaded from our search query onto a variable that will be used as an arguement for the setGameData function
+            let pagingNumber = Math.ceil(numberOfMenuItemsAvailable / expectedResults); // Divides the number of loaded menu items by 100, which gives the total number of pages where all of the data is sorted
+                // pagingNumber is rounded up to the next largest integer as the number of pages always increments by one if there are remaining data results available
+            let randomOffset = Math.floor(Math.random() * pagingNumber);
+
+            let mainXHR = new XMLHttpRequest(); // Had to use the initial request to generate a random offset number, which generates greater variety for the user everytime a search is made
+            mainXHR.open("GET", `https://api.spoonacular.com/food/menuItems/search?apiKey=${apiKey}&query=${selectedText}&number=${expectedResults}&offset=${randomOffset}`);
+            mainXHR.send();
+            mainXHR.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    setGameData(JSON.parse(this.responseText), expectedResults, expectedImages, numberOfMenuItemsAvailable); // Calling the function that will set the parsed spoonacular data
+                }
+            }
         }
     };
 };

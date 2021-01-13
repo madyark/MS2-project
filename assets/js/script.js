@@ -54,20 +54,20 @@ function setGameData(spoonacularData, numberOfResults, numberOfNeededImages, all
     let leftImage = document.getElementById("image-left");
     let rightImage = document.getElementById("image-right");
 
-    let firstImage = document.querySelector("#image-left img");
-    let secondImage = document.querySelector("#image-right img");
-
     let displayedImages = []; // An array that will store the images already displayed
 
     leftImage.innerHTML = `
         <img src="${menuItemsImagesURLs[0]}" alt="${selectedMenuItems[0].title}">
-        <p>${selectedMenuItems[0].title} from ${selectedMenuItems[0].restaurantChain}</p>
+        <p>${selectedMenuItems[0].title} <br>from ${selectedMenuItems[0].restaurantChain}</p>
     `;
 
     rightImage.innerHTML = `
         <img src="${menuItemsImagesURLs[1]}" alt="${selectedMenuItems[1].title}">
-        <p>${selectedMenuItems[1].title} from ${selectedMenuItems[1].restaurantChain}</p>
+        <p>${selectedMenuItems[1].title} <br>from ${selectedMenuItems[1].restaurantChain}</p>
     `;
+
+    let firstImage = document.querySelector("#image-left img"); 
+    let secondImage = document.querySelector("#image-right img");
     
     firstImage.onclick = function() { // This gif will appear while the webpage loads an image from the API
         leftImage.innerHTML = `
@@ -79,19 +79,6 @@ function setGameData(spoonacularData, numberOfResults, numberOfNeededImages, all
         rightImage.innerHTML = `
             <img src="assets/images/loading.gif" alt="Loading image">
             <p>Please wait. Your image is being loaded.</p>`;
-    };
-
-    for (let imageIterator = 0; imageIterator < menuItemsImagesURLs; imageIterator++) {
-        firstImage.onclick = function() {
-            leftImage.innerHTML = `
-                <img src="${menuItemsImagesURLs[imageIterator]}" alt="${selectedMenuItems[imageIterator].title}">
-                <p>${selectedMenuItems[imageIterator].title} from ${selectedMenuItems[imageIterator].restaurantChain}</p>`
-        };
-        secondImage.onclick = function() {
-            rightImage.innerHTML = `
-                <img src="${menuItemsImagesURLs[imageIterator]}" alt="${selectedMenuItems[imageIterator].title}">
-                <p>${selectedMenuItems[imageIterator].title} from ${selectedMenuItems[imageIterator].restaurantChain}</p>`
-        };
     };
 
     // Tells the user how many menu items were loaded through their search query

@@ -66,21 +66,49 @@ function setGameData(spoonacularData, numberOfResults, numberOfNeededImages, all
         <p>${selectedMenuItems[1].title} <br>from ${selectedMenuItems[1].restaurantChain}</p>
     `;
 
+    displayedImages.push(menuItemsImagesURLs[0]);
+    displayedImages.push(menuItemsImagesURLs[1]);
+
     let firstImage = document.querySelector("#image-left img"); 
     let secondImage = document.querySelector("#image-right img");
     
-    firstImage.onclick = function() { // This gif will appear while the webpage loads an image from the API
-        leftImage.innerHTML = `
-            <img src="assets/images/loading.gif" alt="Loading image">
-            <p>Please wait. Your image is being loaded.</p>`;
-    };
+    let selectedAmountOfPictures = 0;
 
-    secondImage.onclick = function() { // This gif will appear while the webpage loads an image from the API
-        rightImage.innerHTML = `
-            <img src="assets/images/loading.gif" alt="Loading image">
-            <p>Please wait. Your image is being loaded.</p>`;
-    };
+    while (selectedAmountOfPictures < 15) {
+        firstImage.onclick = function() {
+            rightImage.innerHTML = `
+                <img src="assets/images/loading.gif" alt="Loading image">
+                <p>Please wait. Your image is being loaded.</p>`; // This gif will appear while the webpage loads an image from the API
+            for (let numberOfSelectedURLs = 0; numberOfSelectedURLs < menuItemsImagesURLs.length; numberOfSelectedURLs++) {
+                if (displayedImages.includes(menuItemsImagesURLs[numberOfSelectedURLs])) {
+                    continue;
+                } else {
+                    rightImage.innerHTML = `
+                    <img src="${menuItemsImagesURLs[numberOfSelectedURLs]} alt="${selectedMenuItems[numberOfSelectedURLs].title}">
+                    <p>${selectedMenuItems[numberOfSelectedURLs].title} <br>from ${selectedMenuItems[numberOfSelectedURLs].restaurantChain}</p>`;
+                    displayedImages.push(menuItemsImagesURLs[numberOfSelectedURLs]);
+                };
+            };
+            selectedAmountOfPictures++;
+        };
 
+        secondImage.onclick = function() {
+            leftImage.innerHTML = `
+                <img src="assets/images/loading.gif" alt="Loading image">
+                <p>Please wait. Your image is being loaded.</p>`; // This gif will appear while the webpage loads an image from the API
+            for (let numberOfSelectedURLs = 0; numberOfSelectedURLs < menuItemsImagesURLs.length; numberOfSelectedURLs++) {
+                if (displayedImages.includes(menuItemsImagesURLs[numberOfSelectedURLs])) {
+                    continue;
+                } else {
+                    leftImage.innerHTML = `
+                    <img src="${menuItemsImagesURLs[numberOfSelectedURLs]} alt="${selectedMenuItems[numberOfSelectedURLs].title}">
+                    <p>${selectedMenuItems[numberOfSelectedURLs].title} <br>from ${selectedMenuItems[numberOfSelectedURLs].restaurantChain}</p>`;
+                    displayedImages.push(menuItemsImagesURLs[numberOfSelectedURLs]);
+                };
+            };
+            selectedAmountOfPictures++;
+        };
+    }
     // Tells the user how many menu items were loaded through their search query
     amountOfItemsLoaded = document.getElementById("amount-of-items-loaded");
     amountOfItemsLoaded.innerHTML = `<p>Your search query generated <span>${allMenuItems}</span> different menu items.</p>`;
@@ -178,9 +206,9 @@ function loadFoodItems() { // Loads the initial items in a random order
     let i = 0;
 
     while (i < foodTypeItemsLength) { // A while loop that allows us to add elements onto the newFoodTypeItems array and print them into the console as long as a certain condition is being met
-        let mealTypes = ["Burger", "Pizza", "Cake", "Chicken", "Steak", "Kebab", "Sushi", "Burrito", "Seafood", "Salad", "Sandwich", "Tacos", "Pasta", "Ice Cream", "French Fries", "Pancakes", "Noodles", "Soup", "Hot Dog", "Donuts", "Fish",];
-        let mealTypesImagesNames = ["hamburger", "pizza", "cake", "chicken-leg", "steak", "kebab", "sushi", "burrito", "shrimp", "salad", "sandwich", "taco", "spaguetti", "ice-cream", "fried-potatoes", "pancake", "noodles", "soup", "hot-dog", "donut", "salmon",];
-        let mealTypesImagesTypes = [".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png",];
+        let mealTypes = ["Burger", "Pizza", "Cake", "Chicken", "Steak", "Kebab", "Burrito", "Seafood", "Salad", "Sandwich", "Tacos", "Pasta", "Ice Cream", "French Fries", "Pancakes", "Noodles", "Soup", "Hot Dog", "Donuts", "Fish",];
+        let mealTypesImagesNames = ["hamburger", "pizza", "cake", "chicken-leg", "steak", "kebab", "burrito", "shrimp", "salad", "sandwich", "taco", "spaguetti", "ice-cream", "fried-potatoes", "pancake", "noodles", "soup", "hot-dog", "donut", "salmon",];
+        let mealTypesImagesTypes = [".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png",];
             // Added names of the images that correspond with each of the meal types and their respective extensions
             // Objects could have been used instead of arrays, but constructing three arrays was more convenient than making eighteen different objects
 

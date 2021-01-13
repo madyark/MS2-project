@@ -168,8 +168,8 @@
 }
 
 #image-left img, #image-right img {
-    width: 500px; /* ensures that all images stay the same width as they change */
-    height: 500px; /* ensures that all images stay the same height as they change */
+    width: 636px; /* ensures that all images stay the same width as they change */
+    height: 393px; /* ensures that all images stay the same height as they change */
     object-fit: cover; /* ensures that the images preserve their aspect ratio even though they have a set width and height */
     border: 3px solid #000000;
     overflow: hidden; /* ensures that images will not overflow outside of their parent container */

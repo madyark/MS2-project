@@ -68,6 +68,18 @@ function setGameData(spoonacularData, numberOfResults, numberOfNeededImages, all
         <img src="${menuItemsImagesURLs[1]}" alt="${selectedMenuItems[1].title}">
         <p>${selectedMenuItems[1].title} from ${selectedMenuItems[1].restaurantChain}</p>
     `;
+    
+    firstImage.onclick = function() { // This gif will appear while the webpage loads an image from the API
+        leftImage.innerHTML = `
+            <img src="assets/images/loading.gif" alt="Loading image">
+            <p>Please wait. Your image is being loaded.</p>`;
+    };
+
+    secondImage.onclick = function() { // This gif will appear while the webpage loads an image from the API
+        rightImage.innerHTML = `
+            <img src="assets/images/loading.gif" alt="Loading image">
+            <p>Please wait. Your image is being loaded.</p>`;
+    };
 
     for (let imageIterator = 0; imageIterator < menuItemsImagesURLs; imageIterator++) {
         firstImage.onclick = function() {
@@ -98,13 +110,13 @@ function foodItemSelection(selectedText) { // Loads the API after one of the foo
 
         <ul id="clickable-images">
             <li id="image-left">
-                <img src="assets/images/image-one-default.jpg" alt="The default first image (of croissants) inserted onto the page if the API fails to load correctly">
-                <p>Image One meal name</p>
+                <img>
+                <p></p>
             </li>
             <span>OR</span> <!-- This element will be in between the two different items, helping guide the user in what their options are -->
             <li id="image-right">
-                <img src="assets/images/image-two-default.jpg" alt="The default second image (of pancakes) inserted onto the page if the API fails to load correctly">
-                <p>Image Two meal name</p>
+                <img>
+                <p></p>
             </li>
         </ul>
 
@@ -125,25 +137,6 @@ function foodItemSelection(selectedText) { // Loads the API after one of the foo
             <p>Your search query generated <span>0</span> different menu items.</p>
         </div>
     `    
-
-    // Loading of the images that will change based on clicks
-    let imgLeft = document.getElementById("image-left");
-    let imgRight = document.getElementById("image-right");
-
-    let imgOne = document.querySelector("#image-left img");
-    let imgTwo = document.querySelector("#image-right img");
-
-    imgOne.onclick = function() { // This image will appear while the webpage loads an image from the API
-        imgLeft.innerHTML = `
-            <img src="assets/images/loading.gif" alt="Loading image">
-            <p>Please wait. Your image is being loaded.</p>`;
-    };
-
-    imgTwo.onclick = function() { // This image will appear while the webpage loads an image from the API
-        imgRight.innerHTML = `
-            <img src="assets/images/loading.gif" alt="Loading image">
-            <p>Please wait. Your image is being loaded.</p>`;
-    };
 
     // Calling the Spoonacular API
     selectedText = selectedText.toLowerCase(); // The selectedText paramater should be lowercase as it will be used as the search query for the API
@@ -170,9 +163,20 @@ function foodItemSelection(selectedText) { // Loads the API after one of the foo
             mainXHR.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     setGameData(JSON.parse(this.responseText), expectedResults, expectedImages, numberOfMenuItemsAvailable); // Calling the function that will set the parsed spoonacular data
-                }
-            }
-        }
+                } else { // Loading of the images that will change based on clicks (will only load if the API does not load)
+                    let imgLeft = document.getElementById("image-left");
+                    let imgRight = document.getElementById("image-right");
+
+                    imgLeft.innerHTML = `
+                    <img src="assets/images/image-one-default.jpg" alt="The default first image (of croissants) inserted onto the page if the API fails to load correctly">
+                    <p>Image One meal name</p>`
+
+                    imgRight.innerHTML = `
+                    <img src="assets/images/image-two-default.jpg" alt="The default second image (of pancakes) inserted onto the page if the API fails to load correctly">
+                    <p>Image Two meal name</p>`
+                };
+            };
+        };
     };
 };
 

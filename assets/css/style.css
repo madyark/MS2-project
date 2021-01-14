@@ -183,6 +183,8 @@
     font-size: 24px;
     font-weight: 600;
     margin-top: 32px;
+    height: 80px; /* fixed height for the paragraphs underneath the images to ensure that the images always stay vertically aligned to each other, even if the paragraphs have multiple lines of text or a single line of text */
+    overflow: visible;
 }
 
 #progress-bar-display {

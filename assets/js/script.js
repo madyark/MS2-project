@@ -71,44 +71,39 @@ function setGameData(spoonacularData, numberOfResults, numberOfNeededImages, all
 
     let firstImage = document.querySelector("#image-left img"); 
     let secondImage = document.querySelector("#image-right img");
-    
-    let selectedAmountOfPictures = 0;
 
-    while (selectedAmountOfPictures < 15) {
-        firstImage.onclick = function() {
-            rightImage.innerHTML = `
-                <img src="assets/images/loading.gif" alt="Loading image">
-                <p>Please wait. Your image is being loaded.</p>`; // This gif will appear while the webpage loads an image from the API
-            for (let numberOfSelectedURLs = 0; numberOfSelectedURLs < menuItemsImagesURLs.length; numberOfSelectedURLs++) {
-                if (displayedImages.includes(menuItemsImagesURLs[numberOfSelectedURLs])) {
-                    continue;
-                } else {
-                    rightImage.innerHTML = `
-                    <img src="${menuItemsImagesURLs[numberOfSelectedURLs]} alt="${selectedMenuItems[numberOfSelectedURLs].title}">
-                    <p>${selectedMenuItems[numberOfSelectedURLs].title} <br>from ${selectedMenuItems[numberOfSelectedURLs].restaurantChain}</p>`;
-                    displayedImages.push(menuItemsImagesURLs[numberOfSelectedURLs]);
-                };
+    firstImage.onclick = function() {
+        rightImage.innerHTML = `
+            <img src="assets/images/loading.gif" alt="Loading image">
+            <p>Please wait. Your image is being loaded.</p>`; // This gif will appear while the webpage loads an image from the API
+        for (let numberOfSelectedURLs = 0; numberOfSelectedURLs < menuItemsImagesURLs.length; numberOfSelectedURLs++) {
+            if (displayedImages.includes(menuItemsImagesURLs[numberOfSelectedURLs])) {
+                continue;
+            } else {
+                rightImage.innerHTML = `
+                <img src="${menuItemsImagesURLs[numberOfSelectedURLs]} alt="${selectedMenuItems[numberOfSelectedURLs].title}">
+                <p>${selectedMenuItems[numberOfSelectedURLs].title} <br>from ${selectedMenuItems[numberOfSelectedURLs].restaurantChain}</p>`;
+                displayedImages.push(menuItemsImagesURLs[numberOfSelectedURLs]);
             };
-            selectedAmountOfPictures++;
         };
+    };
 
-        secondImage.onclick = function() {
-            leftImage.innerHTML = `
-                <img src="assets/images/loading.gif" alt="Loading image">
-                <p>Please wait. Your image is being loaded.</p>`; // This gif will appear while the webpage loads an image from the API
-            for (let numberOfSelectedURLs = 0; numberOfSelectedURLs < menuItemsImagesURLs.length; numberOfSelectedURLs++) {
-                if (displayedImages.includes(menuItemsImagesURLs[numberOfSelectedURLs])) {
-                    continue;
-                } else {
-                    leftImage.innerHTML = `
-                    <img src="${menuItemsImagesURLs[numberOfSelectedURLs]} alt="${selectedMenuItems[numberOfSelectedURLs].title}">
-                    <p>${selectedMenuItems[numberOfSelectedURLs].title} <br>from ${selectedMenuItems[numberOfSelectedURLs].restaurantChain}</p>`;
-                    displayedImages.push(menuItemsImagesURLs[numberOfSelectedURLs]);
-                };
+    secondImage.onclick = function() {
+        leftImage.innerHTML = `
+            <img src="assets/images/loading.gif" alt="Loading image">
+            <p>Please wait. Your image is being loaded.</p>`; // This gif will appear while the webpage loads an image from the API
+        for (let numberOfSelectedURLs = 0; numberOfSelectedURLs < menuItemsImagesURLs.length; numberOfSelectedURLs++) {
+            if (displayedImages.includes(menuItemsImagesURLs[numberOfSelectedURLs])) {
+                continue;
+            } else {
+                leftImage.innerHTML = `
+                <img src="${menuItemsImagesURLs[numberOfSelectedURLs]} alt="${selectedMenuItems[numberOfSelectedURLs].title}">
+                <p>${selectedMenuItems[numberOfSelectedURLs].title} <br>from ${selectedMenuItems[numberOfSelectedURLs].restaurantChain}</p>`;
+                displayedImages.push(menuItemsImagesURLs[numberOfSelectedURLs]);
             };
-            selectedAmountOfPictures++;
         };
-    }
+    };
+
     // Tells the user how many menu items were loaded through their search query
     amountOfItemsLoaded = document.getElementById("amount-of-items-loaded");
     amountOfItemsLoaded.innerHTML = `<p>Your search query generated <span>${allMenuItems}</span> different menu items.</p>`;

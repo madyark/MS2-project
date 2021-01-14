@@ -72,43 +72,34 @@ function setGameData(spoonacularData, numberOfResults, numberOfNeededImages, all
     let firstImage = document.querySelector("#image-left img"); 
     let secondImage = document.querySelector("#image-right img");
 
-    let numberOfSelectedURLs = 0;
-    while (numberOfSelectedURLs < 15) {
-        if (displayedImages.includes(menuItemsImagesURLs[numberOfSelectedURLs])) {
-            continue;
-        } else {
-            let firstImageClicked = false;
-
-            firstImage.onclick = function() {
-                firstImageClicked = true;
-
-                rightImage.innerHTML = `
-                    <img src="assets/images/loading.gif" alt="Loading image">
-                    <p>Please wait. Your image is being loaded.</p>`; // This gif will appear while the webpage loads an image from the API
-
-                rightImage.innerHTML = `
-                    <img src="${menuItemsImagesURLs[numberOfSelectedURLs]}" alt="${selectedMenuItems[numberOfSelectedURLs].title}">
-                    <p>${selectedMenuItems[numberOfSelectedURLs].title} from ${selectedMenuItems[numberOfSelectedURLs].restaurantChain}</p>`;
-                    displayedImages.push(menuItemsImagesURLs[numberOfSelectedURLs]);
-
-                numberOfSelectedURLs++;
-            };
-
-            if (firstImageClicked == true) {
+    firstImage.onclick = function() {
+        rightImage.innerHTML = `
+            <img src="assets/images/loading.gif" alt="Loading image">
+            <p>Please wait. Your image is being loaded.</p>`; // This gif will appear while the webpage loads an image from the API
+        for (let numberOfSelectedURLs = 0; numberOfSelectedURLs < menuItemsImagesURLs.length; numberOfSelectedURLs++) {
+            if (displayedImages.includes(menuItemsImagesURLs[numberOfSelectedURLs])) {
                 continue;
             } else {
-                secondImage.onclick = function() {
-                    leftImage.innerHTML = `
-                        <img src="assets/images/loading.gif" alt="Loading image">
-                        <p>Please wait. Your image is being loaded.</p>`; // This gif will appear while the webpage loads an image from the API
+                rightImage.innerHTML = `
+                <img src="${menuItemsImagesURLs[numberOfSelectedURLs]} alt="${selectedMenuItems[numberOfSelectedURLs].title}">
+                <p>${selectedMenuItems[numberOfSelectedURLs].title} <br>from ${selectedMenuItems[numberOfSelectedURLs].restaurantChain}</p>`;
+                displayedImages.push(menuItemsImagesURLs[numberOfSelectedURLs]);
+            };
+        };
+    };
 
-                    leftImage.innerHTML = `
-                        <img src="${menuItemsImagesURLs[numberOfSelectedURLs]}" alt="${selectedMenuItems[numberOfSelectedURLs].title}">
-                        <p>${selectedMenuItems[numberOfSelectedURLs].title} from ${selectedMenuItems[numberOfSelectedURLs].restaurantChain}</p>`;
-                        displayedImages.push(menuItemsImagesURLs[numberOfSelectedURLs]);
-
-                    numberOfSelectedURLs++;
-                };
+    secondImage.onclick = function() {
+        leftImage.innerHTML = `
+            <img src="assets/images/loading.gif" alt="Loading image">
+            <p>Please wait. Your image is being loaded.</p>`; // This gif will appear while the webpage loads an image from the API
+        for (let numberOfSelectedURLs = 0; numberOfSelectedURLs < menuItemsImagesURLs.length; numberOfSelectedURLs++) {
+            if (displayedImages.includes(menuItemsImagesURLs[numberOfSelectedURLs])) {
+                continue;
+            } else {
+                leftImage.innerHTML = `
+                <img src="${menuItemsImagesURLs[numberOfSelectedURLs]} alt="${selectedMenuItems[numberOfSelectedURLs].title}">
+                <p>${selectedMenuItems[numberOfSelectedURLs].title} <br>from ${selectedMenuItems[numberOfSelectedURLs].restaurantChain}</p>`;
+                displayedImages.push(menuItemsImagesURLs[numberOfSelectedURLs]);
             };
         };
     };

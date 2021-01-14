@@ -51,63 +51,74 @@ function setGameData(spoonacularData, numberOfResults, numberOfNeededImages, all
     console.log(selectedMenuItems);
     console.log(menuItemsImagesURLs);
 
+    // Tells the user how many menu items were loaded through their search query
+    amountOfItemsLoaded = document.getElementById("amount-of-items-loaded");
+    amountOfItemsLoaded.innerHTML = `<p>Your search query generated <span>${allMenuItems}</span> different menu items.</p>`;
+
     let leftImage = document.getElementById("image-left");
     let rightImage = document.getElementById("image-right");
 
-    let displayedImages = []; // An array that will store the images already displayed
-
+    // Loading of the first selected menu item onto the left image and paragraph elements
     leftImage.innerHTML = `
         <img src="${menuItemsImagesURLs[0]}" alt="${selectedMenuItems[0].title}">
         <p>${selectedMenuItems[0].title} <br>from ${selectedMenuItems[0].restaurantChain}</p>
     `;
 
+    // Loading of the second selected menu item onto the right image and paragraph elements
     rightImage.innerHTML = `
         <img src="${menuItemsImagesURLs[1]}" alt="${selectedMenuItems[1].title}">
         <p>${selectedMenuItems[1].title} <br>from ${selectedMenuItems[1].restaurantChain}</p>
     `;
 
+    let displayedImages = []; // An array that will store the images already displayed
+
+    // Pushing the first two selected URLs onto the displayedImages array
     displayedImages.push(menuItemsImagesURLs[0]);
     displayedImages.push(menuItemsImagesURLs[1]);
 
     let firstImage = document.querySelector("#image-left img"); 
     let secondImage = document.querySelector("#image-right img");
 
-    firstImage.onclick = function() {
-        rightImage.innerHTML = `
-            <img src="assets/images/loading.gif" alt="Loading image">
-            <p>Please wait. Your image is being loaded.</p>`; // This gif will appear while the webpage loads an image from the API
-        for (let numberOfSelectedURLs = 0; numberOfSelectedURLs < menuItemsImagesURLs.length; numberOfSelectedURLs++) {
-            if (displayedImages.includes(menuItemsImagesURLs[numberOfSelectedURLs])) {
-                continue;
-            } else {
-                rightImage.innerHTML = `
-                <img src="${menuItemsImagesURLs[numberOfSelectedURLs]} alt="${selectedMenuItems[numberOfSelectedURLs].title}">
-                <p>${selectedMenuItems[numberOfSelectedURLs].title} <br>from ${selectedMenuItems[numberOfSelectedURLs].restaurantChain}</p>`;
-                displayedImages.push(menuItemsImagesURLs[numberOfSelectedURLs]);
-            };
+    for (let urlIterator = 0; urlIterator < menuItemsImagesURLs.length; urlIterator++) {
+        if (displayedImages.includes(menuItemsImagesURLs[urlIterator])) {
+            continue;
+        }
+
+        console.log(urlIterator);
+
+        let firstImageClicked = false;
+        let secondImageClicked = false;
+
+        // A function that will change the image and paragraph elements of the unselected right image to the next iterable object in the selectedMenuItems array 
+        firstImage.onclick = function() {
+            rightImage.innerHTML = `
+                <img src="assets/images/loading.gif" alt="Loading image">
+                <p>Please wait. Your image is being loaded.</p>`; // This gif will appear while the webpage loads an image from the API
+
+            rightImage.innerHTML = `
+                <img src="${menuItemsImagesURLs[urlIterator]}" alt="${selectedMenuItems[urlIterator].title}">
+                <p>${selectedMenuItems[urlIterator].title} from ${selectedMenuItems[urlIterator].restaurantChain}</p>`;
+            
+            return;
         };
+
+        // A function that will change the image and paragraph elements of the unselected left image to the next iterable object in the selectedMenuItems array 
+        secondImage.onclick = function() {
+            leftImage.innerHTML = `
+                <img src="assets/images/loading.gif" alt="Loading image">
+                <p>Please wait. Your image is being loaded.</p>`; // This gif will appear while the webpage loads an image from the API
+
+            leftImage.innerHTML = `
+                <img src="${menuItemsImagesURLs[urlIterator]}" alt="${selectedMenuItems[urlIterator].title}">
+                <p>${selectedMenuItems[urlIterator].title} from ${selectedMenuItems[urlIterator].restaurantChain}</p>`;
+            
+            return;
+        };
+
+        displayedImages.push(menuItemsImagesURLs[urlIterator]);
     };
 
-    secondImage.onclick = function() {
-        leftImage.innerHTML = `
-            <img src="assets/images/loading.gif" alt="Loading image">
-            <p>Please wait. Your image is being loaded.</p>`; // This gif will appear while the webpage loads an image from the API
-        for (let numberOfSelectedURLs = 0; numberOfSelectedURLs < menuItemsImagesURLs.length; numberOfSelectedURLs++) {
-            if (displayedImages.includes(menuItemsImagesURLs[numberOfSelectedURLs])) {
-                continue;
-            } else {
-                leftImage.innerHTML = `
-                <img src="${menuItemsImagesURLs[numberOfSelectedURLs]} alt="${selectedMenuItems[numberOfSelectedURLs].title}">
-                <p>${selectedMenuItems[numberOfSelectedURLs].title} <br>from ${selectedMenuItems[numberOfSelectedURLs].restaurantChain}</p>`;
-                displayedImages.push(menuItemsImagesURLs[numberOfSelectedURLs]);
-            };
-        };
-    };
-
-    // Tells the user how many menu items were loaded through their search query
-    amountOfItemsLoaded = document.getElementById("amount-of-items-loaded");
-    amountOfItemsLoaded.innerHTML = `<p>Your search query generated <span>${allMenuItems}</span> different menu items.</p>`;
-}
+};
 
 function foodItemSelection(selectedText) { // Loads the API after one of the food items is selected with the food item name being transferred as a paramater of the function 
     let changedBody = document.getElementById("changed-body");

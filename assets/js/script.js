@@ -79,45 +79,54 @@ function setGameData(spoonacularData, numberOfResults, numberOfNeededImages, all
     let firstImage = document.querySelector("#image-left img"); 
     let secondImage = document.querySelector("#image-right img");
 
-    for (let urlIterator = 0; urlIterator < menuItemsImagesURLs.length; urlIterator++) {
-        if (displayedImages.includes(menuItemsImagesURLs[urlIterator])) {
-            continue;
-        }
+    function clickOnImages(unclickedImage) {
+        for (let urlIterator = 0; urlIterator < menuItemsImagesURLs.length; urlIterator++) {
+            if (displayedImages.includes(menuItemsImagesURLs[urlIterator])) {
+                continue;
+            } else {
+                unclickedImage.innerHTML = `
+                    <img src="assets/images/loading.gif" alt="Loading image">
+                    <p>Please wait. Your image is being loaded.</p>`; // This gif will appear while the webpage loads an image from the API
 
-        console.log(urlIterator);
+                unclickedImage.innerHTML = `
+                    <img src="${menuItemsImagesURLs[urlIterator]}" alt="${selectedMenuItems[urlIterator].title}">
+                    <p>${selectedMenuItems[urlIterator].title} from ${selectedMenuItems[urlIterator].restaurantChain}</p>`;
 
+                displayedImages.push(menuItemsImagesURLs[urlIterator]);
+            };
+        };
+    };
+
+    for (let clickedImages = 0; clickedImages < menuItemsImagesURLs.length; clickedImages++) {
         let firstImageClicked = false;
         let secondImageClicked = false;
 
-        // A function that will change the image and paragraph elements of the unselected right image to the next iterable object in the selectedMenuItems array 
         firstImage.onclick = function() {
-            rightImage.innerHTML = `
-                <img src="assets/images/loading.gif" alt="Loading image">
-                <p>Please wait. Your image is being loaded.</p>`; // This gif will appear while the webpage loads an image from the API
-
-            rightImage.innerHTML = `
-                <img src="${menuItemsImagesURLs[urlIterator]}" alt="${selectedMenuItems[urlIterator].title}">
-                <p>${selectedMenuItems[urlIterator].title} from ${selectedMenuItems[urlIterator].restaurantChain}</p>`;
-            
-            return;
+            clickOnImages(rightImage);
+            firstImageClicked = true;
         };
 
-        // A function that will change the image and paragraph elements of the unselected left image to the next iterable object in the selectedMenuItems array 
+        console.log("Displayed Images: " + displayedImages);
+
+        if (firstImageClicked == true) {
+            continue;
+        };
+
+        console.log("First image clicked status: " + firstImageClicked);
+
         secondImage.onclick = function() {
-            leftImage.innerHTML = `
-                <img src="assets/images/loading.gif" alt="Loading image">
-                <p>Please wait. Your image is being loaded.</p>`; // This gif will appear while the webpage loads an image from the API
-
-            leftImage.innerHTML = `
-                <img src="${menuItemsImagesURLs[urlIterator]}" alt="${selectedMenuItems[urlIterator].title}">
-                <p>${selectedMenuItems[urlIterator].title} from ${selectedMenuItems[urlIterator].restaurantChain}</p>`;
-            
-            return;
+            clickOnImages(leftImage);
+            secondImageClicked = true;
         };
 
-        displayedImages.push(menuItemsImagesURLs[urlIterator]);
-    };
+        console.log("Displayed Images 2: " + displayedImages);
 
+        if (secondImageClicked == true) {
+            continue;
+        };
+
+        console.log("Second image clicked status: " + secondImageClicked);
+    };
 };
 
 function foodItemSelection(selectedText) { // Loads the API after one of the food items is selected with the food item name being transferred as a paramater of the function 
@@ -166,7 +175,7 @@ function foodItemSelection(selectedText) { // Loads the API after one of the foo
 
     const expectedResults = 100; // Spoonacular only allows a maximum number of 100 results to be loaded from a search query, which unfortunately harms the UX as a larger number would give greater variety of results
 
-    let initialXHR = new XMLHttpRequest(); // Setting up the initial API request (will be used to load one of the search parameters given by the API, which will then be used to initialize the request with a random number for a different parameter)
+    let initialXHR = new XMLHttpRequest(); // Setting up the initial API request (will be used to load one of the search parameters given by the API, which will then be used to re-initialize the request with a random number for a different parameter)
 
     initialXHR.open("GET", `https://api.spoonacular.com/food/menuItems/search?apiKey=${apiKey}&query=${selectedText}&number=${expectedResults}`);
     initialXHR.send();

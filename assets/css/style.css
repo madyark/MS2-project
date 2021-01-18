@@ -184,6 +184,7 @@
     font-weight: 600;
     margin-top: 32px;
     height: 80px; /* fixed height for the paragraphs underneath the images to ensure that the images always stay vertically aligned to each other, even if the paragraphs have multiple lines of text or a single line of text */
+    max-width: 600px; /* setting a max-width for the paragraphs that is less than the width for the images to ensure that certain items do not move horizontally and stay fixed */
     overflow: visible;
 }
 

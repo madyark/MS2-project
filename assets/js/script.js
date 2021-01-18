@@ -5,19 +5,16 @@ function setGameData(spoonacularData, numberOfResults, numberOfNeededImages, all
     console.log(data);
 
     let menuItemIndex = []; // An empty array where the index number of each random meal item selected will be stored 
-
-    let selectedNumberOfImages = 0; 
     
-    while (selectedNumberOfImages < numberOfNeededImages) {
+    for (let selectedNumberOfImages = 0; selectedNumberOfImages < numberOfNeededImages; selectedNumberOfImages++) {
         let randomMealItemIndex = Math.floor(Math.random() * numberOfResults); // Chooses a random integer from 0 to 99, which will be used as the index number of the various loaded menu items
 
         if (menuItemIndex.includes(randomMealItemIndex)) {
+            selectedNumberOfImages--;
             continue; // Makes sure that the randomMealItemIndex is not added twice meaning that the image will not be repeated
         } else {
             menuItemIndex.push(randomMealItemIndex);
         };
-
-        selectedNumberOfImages++;
     }; 
 
     console.log(menuItemIndex);
@@ -97,36 +94,14 @@ function setGameData(spoonacularData, numberOfResults, numberOfNeededImages, all
         };
     };
 
-    for (let clickedImages = 0; clickedImages < menuItemsImagesURLs.length; clickedImages++) {
-        let firstImageClicked = false;
-        let secondImageClicked = false;
+    firstImage.addEventListener("click", function() {
+        clickOnImages(rightImage);
+    });
 
-        firstImage.onclick = function() {
-            clickOnImages(rightImage);
-            firstImageClicked = true;
-        };
-
-        console.log("Displayed Images: " + displayedImages);
-
-        if (firstImageClicked == true) {
-            continue;
-        };
-
-        console.log("First image clicked status: " + firstImageClicked);
-
-        secondImage.onclick = function() {
-            clickOnImages(leftImage);
-            secondImageClicked = true;
-        };
-
-        console.log("Displayed Images 2: " + displayedImages);
-
-        if (secondImageClicked == true) {
-            continue;
-        };
-
-        console.log("Second image clicked status: " + secondImageClicked);
-    };
+    secondImage.addEventListener("click", function() {
+        clickOnImages(leftImage);
+    });
+    
 };
 
 function foodItemSelection(selectedText) { // Loads the API after one of the food items is selected with the food item name being transferred as a paramater of the function 
@@ -183,8 +158,8 @@ function foodItemSelection(selectedText) { // Loads the API after one of the foo
     initialXHR.onreadystatechange = function() { // Setting up the XHR state listener
         if (this.readyState == 4 && this.status == 200) {
             let numberOfMenuItemsAvailable = JSON.parse(this.responseText).totalMenuItems; // Assigns the number of menu items loaded from our search query onto a variable that will be used as an arguement for the setGameData function
-            let pagingNumber = Math.ceil(numberOfMenuItemsAvailable / expectedResults); // Divides the number of loaded menu items by 100, which gives the total number of pages where all of the data is sorted
-                // pagingNumber is rounded up to the next largest integer as the number of pages always increments by one if there are remaining data results available
+            let pagingNumber = Math.floor(numberOfMenuItemsAvailable / expectedResults); // Divides the number of loaded menu items by 100, which gives the total number of pages where all of the data is sorted
+                // pagingNumber is rounded down to the next largest integer since the program should always have the maximum number of menu items available (100) to select from
             let randomOffset = Math.floor(Math.random() * pagingNumber);
 
             let mainXHR = new XMLHttpRequest(); // Had to use the initial request to generate a random offset number, which generates greater variety for the user everytime a search is made
@@ -218,9 +193,7 @@ function loadFoodItems() { // Loads the initial items in a random order
     let newFoodTypeItems = [];
     let newFoodTypeImages = [];
 
-    let i = 0;
-
-    while (i < foodTypeItemsLength) { // A while loop that allows us to add elements onto the newFoodTypeItems array and print them into the console as long as a certain condition is being met
+    for (let i = 0; i < foodTypeItemsLength; i++) { // A for loop that allows us to add elements onto the newFoodTypeItems array and print them into the console
         let mealTypes = ["Burger", "Pizza", "Cake", "Chicken", "Steak", "Kebab", "Burrito", "Seafood", "Salad", "Sandwich", "Tacos", "Pasta", "Ice Cream", "French Fries", "Pancakes", "Noodles", "Soup", "Hot Dog", "Donuts", "Fish",];
         let mealTypesImagesNames = ["hamburger", "pizza", "cake", "chicken-leg", "steak", "kebab", "burrito", "shrimp", "salad", "sandwich", "taco", "spaguetti", "ice-cream", "fried-potatoes", "pancake", "noodles", "soup", "hot-dog", "donut", "salmon",];
         let mealTypesImagesTypes = [".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png",];
@@ -231,8 +204,9 @@ function loadFoodItems() { // Loads the initial items in a random order
         let specificMealType = mealTypes[randomNumber];
         let specificMealTypeImage = mealTypesImagesNames[randomNumber] + mealTypesImagesTypes[randomNumber];
 
-        if (newFoodTypeItems.includes(specificMealType)) {
-            continue; // If the selected element from the mealTypes array is already in the newFoodTypeItems array, the loop will restart 
+        if (newFoodTypeItems.includes(specificMealType)) { // If the selected element from the mealTypes array is already in the newFoodTypeItems array, the loop will restart with the same value for the 'i' variable
+            i--;
+            continue;
         } else {
             newFoodTypeItems.push(specificMealType);
             newFoodTypeImages.push(specificMealTypeImage);
@@ -242,7 +216,6 @@ function loadFoodItems() { // Loads the initial items in a random order
                 <span class="${newFoodTypeItems[i]} food-item-span${i}" onclick="foodItemSelection(this.className)">${newFoodTypeItems[i]}<i class="fa fa-angle-right"></i></span>`; 
                 // Each element in the newFoodTypeItems array is added onto the DOM along with its corresponding image
                 // Classes are added so as to push it as a parameter onto the foodItemSelection function. The inspiration for this was found here https://www.codegrepper.com/code-examples/objectivec/javascript+get+value+of+clicked+element
-            i++;
         };
     };
 
@@ -254,6 +227,6 @@ function loadFoodItems() { // Loads the initial items in a random order
             $(`.food-item-span${j}`).removeClass("red-hover");
         });
     };
-}
+};
         
             

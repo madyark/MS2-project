@@ -1,5 +1,15 @@
 // Picture Game section
 
+function iterateOverImages(unclickedImage, allSelectedItemsArray, allImagesArray, iteratingNumber) {
+    unclickedImage.innerHTML = `
+        <img src="assets/images/loading.gif" alt="Loading image">
+        <p>Please wait. Your image is being loaded.</p>`; // This gif will appear while the webpage loads an image from the API
+
+    unclickedImage.innerHTML = `
+        <img src="${allImagesArray[iteratingNumber]}" alt="${allSelectedItemsArray[iteratingNumber].title}">
+        <p>${allSelectedItemsArray[iteratingNumber].title} from ${allSelectedItemsArray[iteratingNumber].restaurantChain}</p>`;
+};
+
 function setGameData(spoonacularData, numberOfResults, numberOfNeededImages, allMenuItems) { // Sets the data received from the spoonacular API onto the picture game (along with the expected number of results generated and number of needed images)
     let data = spoonacularData;
     console.log(data);
@@ -76,31 +86,23 @@ function setGameData(spoonacularData, numberOfResults, numberOfNeededImages, all
     let firstImage = document.querySelector("#image-left img"); 
     let secondImage = document.querySelector("#image-right img");
 
-    function clickOnImages(unclickedImage) {
-        for (let urlIterator = 0; urlIterator < menuItemsImagesURLs.length; urlIterator++) {
-            if (displayedImages.includes(menuItemsImagesURLs[urlIterator])) {
-                continue;
-            } else {
-                unclickedImage.innerHTML = `
-                    <img src="assets/images/loading.gif" alt="Loading image">
-                    <p>Please wait. Your image is being loaded.</p>`; // This gif will appear while the webpage loads an image from the API
+    for (let urlIterator = 0; urlIterator < menuItemsImagesURLs.length; urlIterator++) {
+        if (displayedImages.includes(menuItemsImagesURLs[urlIterator])) {
+            continue;
+        } else {
+            console.log(urlIterator);
+            firstImage.addEventListener("click", function() {
+                iterateOverImages(rightImage, selectedMenuItems, menuItemsImagesURLs, urlIterator);
+            });
 
-                unclickedImage.innerHTML = `
-                    <img src="${menuItemsImagesURLs[urlIterator]}" alt="${selectedMenuItems[urlIterator].title}">
-                    <p>${selectedMenuItems[urlIterator].title} from ${selectedMenuItems[urlIterator].restaurantChain}</p>`;
+            secondImage.addEventListener("click", function() {
+                iterateOverImages(leftImage, selectedMenuItems, menuItemsImagesURLs, urlIterator);
+            });
 
-                displayedImages.push(menuItemsImagesURLs[urlIterator]);
-            };
+            displayedImages.push(menuItemsImagesURLs[urlIterator]);
         };
+        console.log(displayedImages);
     };
-
-    firstImage.addEventListener("click", function() {
-        clickOnImages(rightImage);
-    });
-
-    secondImage.addEventListener("click", function() {
-        clickOnImages(leftImage);
-    });
     
 };
 

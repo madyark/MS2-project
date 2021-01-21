@@ -86,33 +86,35 @@ function setGameData(spoonacularData, numberOfResults, numberOfNeededImages, all
     let firstImage = document.querySelector("#image-left img"); 
     let secondImage = document.querySelector("#image-right img");
 
-    function clickingOnImages() {
-        let urlIterator = 0;
+    function clickingOnImages(urlIterator) {
+        if (urlIterator >= menuItemsImagesURLs.length) {
+            return;
+        };
 
         for (let i = urlIterator; i < menuItemsImagesURLs.length; i++) {
             if (displayedImages.includes(menuItemsImagesURLs[i])) {
                 continue;
             } else {
                 urlIterator = i;
+                break;
             };
         };
 
         firstImage.addEventListener("click", function() {
             iterateOverImages(rightImage, selectedMenuItems, menuItemsImagesURLs, urlIterator);
             displayedImages.push(menuItemsImagesURLs[urlIterator]);
-            urlIterator++;
-            clickingOnImages();
+            clickingOnImages((urlIterator++));
         });
 
         secondImage.addEventListener("click", function() {
             iterateOverImages(leftImage, selectedMenuItems, menuItemsImagesURLs, urlIterator);
             displayedImages.push(menuItemsImagesURLs[urlIterator]);
-            urlIterator++;
-            clickingOnImages();
+            clickingOnImages((urlIterator++));
         });
     };
 
-    clickingOnImages();
+    let initialIterator = 0;
+    clickingOnImages(initialIterator);
 
 };
 
@@ -206,9 +208,9 @@ function loadFoodItems() { // Loads the initial items in a random order
     let newFoodTypeImages = [];
 
     for (let i = 0; i < foodTypeItemsLength; i++) { // A for loop that allows us to add elements onto the newFoodTypeItems array and print them into the console
-        let mealTypes = ["Burger", "Pizza", "Cake", "Chicken", "Steak", "Kebab", "Burrito", "Seafood", "Salad", "Sandwich", "Tacos", "Pasta", "Ice Cream", "French Fries", "Pancakes", "Noodles", "Soup", "Hot Dog", "Donuts", "Fish",];
-        let mealTypesImagesNames = ["hamburger", "pizza", "cake", "chicken-leg", "steak", "kebab", "burrito", "shrimp", "salad", "sandwich", "taco", "spaguetti", "ice-cream", "fried-potatoes", "pancake", "noodles", "soup", "hot-dog", "donut", "salmon",];
-        let mealTypesImagesTypes = [".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png",];
+        let mealTypes = ["Burger", "Pizza", "Cake", "Chicken", "Steak", "Kebab", "Burrito", "Seafood", "Salad", "Sandwich", "Tacos", "Pasta", "Ice Cream", "French Fries", "Pancakes", "Noodles", "Soup", "Hot Dog", "Fish",];
+        let mealTypesImagesNames = ["hamburger", "pizza", "cake", "chicken-leg", "steak", "kebab", "burrito", "shrimp", "salad", "sandwich", "taco", "spaguetti", "ice-cream", "fried-potatoes", "pancake", "noodles", "soup", "hot-dog", "salmon",];
+        let mealTypesImagesTypes = [".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png", ".png",];
             // Added names of the images that correspond with each of the meal types and their respective extensions
             // Objects could have been used instead of arrays, but constructing three arrays was more convenient than making eighteen different objects
 

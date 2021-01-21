@@ -86,24 +86,34 @@ function setGameData(spoonacularData, numberOfResults, numberOfNeededImages, all
     let firstImage = document.querySelector("#image-left img"); 
     let secondImage = document.querySelector("#image-right img");
 
-    for (let urlIterator = 0; urlIterator < menuItemsImagesURLs.length; urlIterator++) {
-        if (displayedImages.includes(menuItemsImagesURLs[urlIterator])) {
-            continue;
-        } else {
-            console.log(urlIterator);
-            firstImage.addEventListener("click", function() {
-                iterateOverImages(rightImage, selectedMenuItems, menuItemsImagesURLs, urlIterator);
-            });
+    function clickingOnImages() {
+        let urlIterator = 0;
 
-            secondImage.addEventListener("click", function() {
-                iterateOverImages(leftImage, selectedMenuItems, menuItemsImagesURLs, urlIterator);
-            });
-
-            displayedImages.push(menuItemsImagesURLs[urlIterator]);
+        for (let i = urlIterator; i < menuItemsImagesURLs.length; i++) {
+            if (displayedImages.includes(menuItemsImagesURLs[i])) {
+                continue;
+            } else {
+                urlIterator = i;
+            };
         };
-        console.log(displayedImages);
+
+        firstImage.addEventListener("click", function() {
+            iterateOverImages(rightImage, selectedMenuItems, menuItemsImagesURLs, urlIterator);
+            displayedImages.push(menuItemsImagesURLs[urlIterator]);
+            urlIterator++;
+            clickingOnImages();
+        });
+
+        secondImage.addEventListener("click", function() {
+            iterateOverImages(leftImage, selectedMenuItems, menuItemsImagesURLs, urlIterator);
+            displayedImages.push(menuItemsImagesURLs[urlIterator]);
+            urlIterator++;
+            clickingOnImages();
+        });
     };
-    
+
+    clickingOnImages();
+
 };
 
 function foodItemSelection(selectedText) { // Loads the API after one of the food items is selected with the food item name being transferred as a paramater of the function 

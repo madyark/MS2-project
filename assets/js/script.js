@@ -8,6 +8,8 @@ function iterateOverImages(unclickedImage, allSelectedItemsArray, allImagesArray
     unclickedImage.innerHTML = `
         <img src="${allImagesArray[iteratingNumber]}" alt="${allSelectedItemsArray[iteratingNumber].title}">
         <p>${allSelectedItemsArray[iteratingNumber].title} from ${allSelectedItemsArray[iteratingNumber].restaurantChain}</p>`;
+
+    return;
 };
 
 function setGameData(spoonacularData, numberOfResults, numberOfNeededImages, allMenuItems) { // Sets the data received from the spoonacular API onto the picture game (along with the expected number of results generated and number of needed images)
@@ -88,6 +90,7 @@ function setGameData(spoonacularData, numberOfResults, numberOfNeededImages, all
 
     function clickingOnImages(urlIterator) {
         if (urlIterator >= menuItemsImagesURLs.length) {
+            finalizedSelection();
             return;
         };
 
